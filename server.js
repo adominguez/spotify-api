@@ -50,10 +50,10 @@ app.get('/artist/:id', function (req, res) {
         },
         json: true
       };
-      request.get(options, function (error, response, body) {
+      return request.get(options, function (error, response, body) {
         if(!error) {
-          console.log(body["artists"].items);
-          return body["artists"].items
+          console.log(response.body["artists"].items)
+          return response.body["artists"].items
         } else {
           console.log('hay un error', error)
           return error;
