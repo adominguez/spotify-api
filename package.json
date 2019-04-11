@@ -1,5 +1,5 @@
 {
-  "name": "3DMakerNow-api",
+  "name": "Photomaton-api-back",
   "version": "0.0.1",
   "description": "API for 3DMakerNow",
   "main": "index.js",
@@ -13,5 +13,8 @@
     "express": "^4.13.3",
     "https": "^1.0.0",
     "underscore": "^1.8.3"
+  },
+  "engines": {
+    "node": "10.x"
   }
 }
