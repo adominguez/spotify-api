@@ -6,10 +6,10 @@ var request = require('request');
 var app = express();
 var PORT = process.env.PORT || 8000;
 
-var client_id = 'afa5db9e6e4e4840ad591f58dc5b6a2d'; // Your client id
-var client_secret = '7b231e9b2c524ac08b518761fbfff616'; // Your secret
+var client_id = 'afa5db9e6e4e4840ad591f58dc5b6a2d'; // Spotify client id
+var client_secret = '7b231e9b2c524ac08b518761fbfff616'; // Spotify secret
 
-// your application requests authorization
+// Spotify Application requests authorization
 var authOptions = {
   url: 'https://accounts.spotify.com/api/token',
   headers: {
@@ -35,6 +35,21 @@ app.get('/printers', function (req, res) {
 });
 
 
+// GET TOKEN
+app.get('/get-token', function (req, res) {
+  request.post(authOptions, function (error, response, body) {
+    if (!error && response.statusCode === 200) {
+      const token = body.access_token;
+      return token;
+    } else {
+      return {
+        type: error,
+        error
+      }
+    }
+  });
+});
+
 // GET /artist/:id
 app.get('/artist/:id', function (req, res) {
   request.post(authOptions, function (error, response, body) {
@@ -42,7 +57,7 @@ app.get('/artist/:id', function (req, res) {
       const query = req.params.id
       const url = `https://api.spotify.com/v1/search?q=${query}&type=artist&limit=15`;
       const token = body.access_token;
-
+      console.log(token)
       var options = {
         url: url,
         headers: {
@@ -52,7 +67,7 @@ app.get('/artist/:id', function (req, res) {
       };
       return request.get(options, function (error, response, body) {
         if(!error) {
-          console.log(response.body["artists"].items)
+          //console.log(response.body["artists"].items)
           return response.body["artists"].items
         } else {
           console.log('hay un error', error)
