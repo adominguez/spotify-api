@@ -25,15 +25,12 @@ app.get('/', function (req, res) {
 app.get('/get-spotify-token', function (req, res) {
   // Retrieve an access token.
 
-  res.header('Access-Control-Allow-Credentials', true); // TODO - Make this more secure!!
+  res.header('Access-Control-Allow-Credentials', true);
   res.header('Access-Control-Allow-Origin', "*"); // TODO - Make this more secure!!
   res.header('Access-Control-Allow-Methods', 'GET,PUT,POST');
   res.header('Access-Control-Allow-Headers', 'application/json');
   //res.header('Access-Control-Allow-Headers', 'Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept');
-  res.json(spotifyApi.clientCredentialsGrant().then(data => {
-    return data.body;
-  }, error => res.json(error))
-  );
+  spotifyApi.clientCredentialsGrant().then(data => res.json(data.body), error => res.json(error));
 });
 
 // Server port listening
