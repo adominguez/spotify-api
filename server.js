@@ -44,21 +44,27 @@ app.get('/get-spotify-token', function (req, res) {
     //res.header('Access-Control-Allow-Headers', 'Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept');
     spotifyApi.searchTracks(req.params.tracks)
       .then(function(data) {
+        spotifyApi.clientCredentialsGrant().then(data => {
+          spotifyApi.setAccessToken(data.body['access_token']);
+        }, error => error);
         res.json(data.body);
       }, function(error) {
         res.json(error);
       });
-});
+    });
 
-  // GET /artists/:artist
-  app.get('/artists/:artists', function (req, res) {
-    res.header('Access-Control-Allow-Credentials', true);
-    res.header('Access-Control-Allow-Origin', "*"); // TODO - Make this more secure!!
-    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST');
-    res.header('Access-Control-Allow-Headers', 'application/json');
-    //res.header('Access-Control-Allow-Headers', 'Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept');
-    spotifyApi.searchArtists(req.params.artists)
+    // GET /artists/:artist
+    app.get('/artists/:artists', function (req, res) {
+      res.header('Access-Control-Allow-Credentials', true);
+      res.header('Access-Control-Allow-Origin', "*"); // TODO - Make this more secure!!
+      res.header('Access-Control-Allow-Methods', 'GET,PUT,POST');
+      res.header('Access-Control-Allow-Headers', 'application/json');
+      //res.header('Access-Control-Allow-Headers', 'Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept');
+      spotifyApi.searchArtists(req.params.artists)
       .then(function(data) {
+        spotifyApi.clientCredentialsGrant().then(data => {
+          spotifyApi.setAccessToken(data.body['access_token']);
+        }, error => error);
         res.json(data.body);
       }, function(error) {
         res.json(error);
