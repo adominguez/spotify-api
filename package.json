@@ -11,8 +11,11 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.13.3",
+    "http": "0.0.0",
     "https": "^1.0.0",
+    "node-fetch": "^2.3.0",
     "request": "^2.88.0",
+    "spotify-web-api-node": "^4.0.0",
     "underscore": "^1.8.3"
   },
   "engines": {
