@@ -69,7 +69,25 @@ app.get('/get-spotify-token', function (req, res) {
       }, function(error) {
         res.json(error);
       });
-});
+    });
+
+    // GET /artists/:artist/top-track
+    app.get('/artists/:artists/top-track', function (req, res) {
+      res.header('Access-Control-Allow-Credentials', true);
+      res.header('Access-Control-Allow-Origin', "*"); // TODO - Make this more secure!!
+      res.header('Access-Control-Allow-Methods', 'GET,PUT,POST');
+      res.header('Access-Control-Allow-Headers', 'application/json');
+      //res.header('Access-Control-Allow-Headers', 'Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept');
+      spotifyApi.getArtistTopTracks(req.params.artists, 'ES')
+      .then(function(data) {
+        spotifyApi.clientCredentialsGrant().then(data => {
+          spotifyApi.setAccessToken(data.body['access_token']);
+        }, error => error);
+        res.json(data.body);
+      }, function(error) {
+        res.json(error);
+      });
+    });
 
 // Server port listening
 app.listen(PORT, function () {
